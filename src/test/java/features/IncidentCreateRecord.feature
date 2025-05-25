@@ -26,3 +26,9 @@ Feature: Creating new record in the Service Now Incident table
       | RESTAPIMAY2025 2 | Create a new record using POST method 2 |
       | RESTAPIMAY2025 3 | Create a new record using POST method 3 |
       | RESTAPIMAY2025 4 | Create a new record using POST method 4 |
+
+  Scenario: Create the new record in the incidet table and display response in xml format
+    Given Add the accept header with key name as "Accept" and value as "application/xml"
+    When send the request body as form of string value "{\"short_description\": \"RESTAPIMAY2025\",\"description\": \"Create a new record using POST method\"}"
+    And hit the post method to create new record
+    Then validate the record is created succesfully and response should be in the XML
