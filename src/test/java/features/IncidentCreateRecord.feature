@@ -7,11 +7,13 @@ Feature: Creating new record in the Service Now Incident table
     And Set basic authentication with username "admin" and password "d@9IvhOh5DR*"
     And Add the header with key name as "Content-Type" and value as "application/json"
 
+  @smoke @e2e
   Scenario: Create the new record in the incident table
     When send the request body as form of string value "{\"short_description\": \"RESTAPIMAY2025\",\"description\": \"Create a new record using POST method\"}"
     And hit the post method to create new record
     Then validate the record is created succesfully
 
+  @e2e
   Scenario Outline: Create mulipule new records in the incident table
     When send the request body as a POJO object
       | <shortDescription> | <description> |
