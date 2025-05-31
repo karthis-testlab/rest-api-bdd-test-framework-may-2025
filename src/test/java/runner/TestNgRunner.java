@@ -4,8 +4,8 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-		          features = "src/test/java/features/IncidentCreateRecord.feature:30",
-		          glue = {"steps.def.som", "hooks"},
+		          features = "src/test/java/features/IncidentCreateRecord.feature:17",
+		          glue = {"steps.som.base"},
 		          dryRun = false,
 		          plugin = {
 		        		  "html:reports/cucumber-report.html",
