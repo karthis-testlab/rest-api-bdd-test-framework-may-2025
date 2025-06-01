@@ -8,8 +8,6 @@ import io.restassured.response.Response;
 import pojos.IncidentRequestPayload;
 import servicenow.som.base.IncidentService;
 
-import static io.restassured.RestAssured.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,27 +23,32 @@ public class IncidentSteps {
 
 	@Given("Set the base uri {string} of the service now application")
 	public void set_the_base_uri_of_the_service_now_application(String uri) {
-		baseURI = uri;
+		//baseURI = uri;
+		incidentService.setBaseUri(uri);
 	}
 
 	@Given("Set the base path {string} of the service now api")
 	public void set_the_base_path_of_the_service_now_api(String path) {
-		basePath = path;
+		//basePath = path;
+		incidentService.setBasePath(path);
 	}
 
 	@Given("Set the path parameter key name as {string} and value as {string}")
 	public void set_the_path_parameter_key_name_as_and_value_as(String key, String value) {
 		pathParamters.put(key, value);
+		incidentService.setPathParams(pathParamters);
 	}
 
 	@Given("Set basic authentication with username {string} and password {string}")
 	public void set_basic_authentication_with_username_and_password(String username, String password) {
-		authentication = basic(username, password);
+		//authentication = basic(username, password);
+		incidentService.setBasicAuth(username, password);
 	}
 
 	@Given("Add the header with key name as {string} and value as {string}")
 	public void add_the_header_with_key_name_as_and_value_as(String key, String value) {
 		headers.put(key, value);
+		incidentService.setHeaders(headers);
 	}
 
 	@When("send the request body as form of string value {string}")
@@ -55,7 +58,7 @@ public class IncidentSteps {
 
 	@When("hit the post method to create new record")
 	public void hit_the_post_method_to_create_new_record() {
-		incidentService.createNewRecord(headers, requstBody);
+		incidentService.createNewRecord(requstBody);
 	}
 
 	@Then("validate the record is created succesfully")
@@ -80,6 +83,7 @@ public class IncidentSteps {
 	@Given("Add the accept header with key name as {string} and value as {string}")
 	public void add_the_accept_header_with_key_name_as_and_value_as(String key, String value) {
 	    headers.put(key, value);
+	    incidentService.setHeaders(headers);
 	}
 	
 	@Then("validate the record is created succesfully and response should be in the XML")

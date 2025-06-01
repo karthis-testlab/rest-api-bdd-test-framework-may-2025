@@ -4,14 +4,7 @@ import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
-import design.IResponse;
-import restassured.base.RestAssuredClient;
-
-public class IncidentService {
-	
-	private static final String service_name = "incident";
-	RestAssuredClient base = new RestAssuredClient();
-	private IResponse response;
+public class IncidentService extends ServiceNow {		
 	
 	public void createNewRecord(Object requestBody) {
 //		response = given()		
@@ -21,7 +14,7 @@ public class IncidentService {
 //		.body(requestBody)
 //		.post("/{tableName}", service_name);
 		
-		response = base.post("/"+service_name, requestBody);
+		setResponse(base.post("/{tableName}", requestBody));
 		
 	}
 	
@@ -32,7 +25,7 @@ public class IncidentService {
 //		.when()
 //		.body(requestBody)
 //		.post("/{tableName}", service_name);
-		response = base.post("/"+service_name, requestBody);
+		setResponse(base.post("/tableName", requestBody));
 	}
 	
 	public void retreiveRecord(String sysID) {
@@ -40,6 +33,7 @@ public class IncidentService {
 //				  .log().all()
 //				  .when()
 //				  .get("/{tableName}/{sysId}", service_name, sysID);
+		setResponse(base.get("/{tableName}/"+sysID));
 	}
 	
 	public void retreiveRecords() {
@@ -47,6 +41,7 @@ public class IncidentService {
 //				  .log().all()
 //				  .when()
 //				  .get("/{tableName}", service_name);
+		setResponse(base.get("/{tableName}"));
 	}
 	
 	public void retreiveHadwareCategoryRecords() {
@@ -64,9 +59,9 @@ public class IncidentService {
 //		        .statusLine(Matchers.containsString(statusMessage))
 //		        .contentType(ContentType.JSON);
 		
-		MatcherAssert.assertThat(response.getStatusCode(), Matchers.equalTo(statusCode));
-		MatcherAssert.assertThat(response.getStatusMesssage(), Matchers.equalTo(statusMessage));
-		MatcherAssert.assertThat(response.getContentType(), Matchers.equalTo("application/json"));		
+		MatcherAssert.assertThat(getResponse().getStatusCode(), Matchers.equalTo(statusCode));
+		MatcherAssert.assertThat(getResponse().getStatusMesssage(), Matchers.equalTo(statusMessage));
+		MatcherAssert.assertThat(getResponse().getContentType(), Matchers.equalTo("application/json"));		
 		
 	}
 	
@@ -76,9 +71,9 @@ public class IncidentService {
 //		        .statusCode(statusCode)
 //		        .statusLine(Matchers.containsString(statusMessage))
 //		        .contentType(ContentType.XML);
-		MatcherAssert.assertThat(response.getStatusCode(), Matchers.equalTo(statusCode));
-		MatcherAssert.assertThat(response.getStatusMesssage(), Matchers.equalTo(statusMessage));
-		MatcherAssert.assertThat(response.getContentType(), Matchers.equalTo("application/xml"));
+		MatcherAssert.assertThat(getResponse().getStatusCode(), Matchers.equalTo(statusCode));
+		MatcherAssert.assertThat(getResponse().getStatusMesssage(), Matchers.equalTo(statusMessage));
+		MatcherAssert.assertThat(getResponse().getContentType(), Matchers.equalTo("application/xml"));
 	}
 
 }
